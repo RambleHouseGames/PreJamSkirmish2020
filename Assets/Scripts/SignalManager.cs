@@ -43,7 +43,7 @@ public class SignalManager : MonoBehaviour
     }
 }
 
-public enum Signal { STARTED_LOADING, GAME_SCENE_LOADED, CIVILIAN_DONKED , CIVILIAN_TURNED_IN}
+public enum Signal { STARTED_LOADING, GAME_SCENE_LOADED, MENU_SCENE_LOADED, CIVILIAN_DONKED , CIVILIAN_TURNED_IN, START_BUTTON_PRESSED}
 
 public class CivilianDonkedArgs
 {
