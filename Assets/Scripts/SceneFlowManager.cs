@@ -57,7 +57,7 @@ public class StartState : SceneState
     private void onSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "GameScene")
-            SignalManager.Inst.FireSignal(Signal.GameSceneLoaded);
+            SignalManager.Inst.FireSignal(Signal.GAME_SCENE_LOADED, null);
         SceneManager.sceneLoaded -= onSceneLoaded;
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class MainCharacterController : MonoBehaviour
 {
-    
+    [SerializeField]
+    private Projectile projectile;
 
     private NavMeshAgent navMeshAgent;
 
@@ -23,34 +24,40 @@ public class MainCharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonUp(1))
+        if (projectile.currentState == ProjectileState.WAITING)
         {
-            Vector3? mouseGroundPoint = RayCastCameraToGround();
-            if(mouseGroundPoint != null)
+            navMeshAgent.isStopped = false;
+            if (Input.GetMouseButtonUp(1))
             {
-                navMeshAgent.destination = (Vector3)mouseGroundPoint;
+                Vector3? mouseGroundPoint = RayCastCameraToGround();
+                if (mouseGroundPoint != null)
+                {
+                    navMeshAgent.destination = (Vector3)mouseGroundPoint;
+                }
             }
-        }
 
-        if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl))
+            if (Input.GetKey(KeyCode.RightControl) || Input.GetKey(KeyCode.LeftControl))
+            {
+                navMeshAgent.updateRotation = false;
+                Vector3? mouseGroundPoint = RayCastCameraToGround();
+                if (mouseGroundPoint != null)
+                {
+                    Vector3 lookPoint = new Vector3(((Vector3)mouseGroundPoint).x, transform.position.y, ((Vector3)mouseGroundPoint).z);
+                    transform.LookAt(lookPoint);
+                }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    projectile.Fire();
+                }
+            }
+            else
+                navMeshAgent.updateRotation = true;
+        }
+        else
         {
-            navMeshAgent.updateRotation = false;
-            Vector3? mouseGroundPoint = RayCastCameraToGround();
-            if (mouseGroundPoint != null)
-            {
-                Vector3 lookPoint = new Vector3(((Vector3)mouseGroundPoint).x, transform.position.y, ((Vector3)mouseGroundPoint).z);
-                transform.LookAt(lookPoint);
-            }
-            if (Input.GetMouseButtonDown(0))
-            {
-
-            }
+            navMeshAgent.destination = transform.position;
+            navMeshAgent.isStopped = true;
         }
-    }
-
-    private void fireGun()
-    {
-
     }
 
     private Vector3? RayCastCameraToGround()

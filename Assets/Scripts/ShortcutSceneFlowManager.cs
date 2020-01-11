@@ -15,6 +15,6 @@ public class ShortcutStartState : SceneState
 {
     protected override void onStart()
     {
-        SignalManager.Inst.FireSignal(Signal.GameSceneLoaded);
+        SignalManager.Inst.FireSignal(Signal.GAME_SCENE_LOADED, null);
     }
 }

@@ -32,7 +32,7 @@ public class MainCamera : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        SignalManager.Inst.AddListenner(Signal.GameSceneLoaded, onGameSceneLoaded);
+        SignalManager.Inst.AddListenner(Signal.GAME_SCENE_LOADED, onGameSceneLoaded);
     }
 
     private void Update()
@@ -57,7 +57,7 @@ public class MainCamera : MonoBehaviour
         }
     }
 
-    private void onGameSceneLoaded()
+    private void onGameSceneLoaded(System.Object args)
     {
         if(player == null)
             player = GameObject.FindGameObjectWithTag("Player");
