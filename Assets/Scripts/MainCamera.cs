@@ -13,11 +13,17 @@ public class MainCamera : MonoBehaviour
     [SerializeField]
     private float ScrollMaxSpeed = 1f;
 
+    [SerializeField]
+    private float smoothTime = .3f;
+
     public static MainCamera Inst;
 
+    [System.NonSerialized]
     public Camera CameraComponent;
 
     private GameObject player;
+
+    private Vector3 velocity;
 
     void Awake()
     {
@@ -37,32 +43,31 @@ public class MainCamera : MonoBehaviour
 
     private void Update()
     {
-        float marginSize = Screen.width * scrollMarginPer;
-
-        if (Input.mousePosition.x < marginSize)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z - (ScrollMaxSpeed * Time.deltaTime));
-        }
-        if (Input.mousePosition.x > Screen.width - marginSize)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + (ScrollMaxSpeed * Time.deltaTime));
-        }
-        if(Input.mousePosition.y < marginSize)
-        {
-            transform.position = new Vector3(transform.position.x + (ScrollMaxSpeed * Time.deltaTime), transform.position.y, transform.position.z);
-        }
-        if (Input.mousePosition.y > Screen.height - marginSize)
-        {
-            transform.position = new Vector3(transform.position.x - (ScrollMaxSpeed * Time.deltaTime), transform.position.y, transform.position.z);
-        }
+        if(SceneFlowManager.Inst.currentState.GetType() == typeof(GameState))
+            updateCameraPosition();
     }
 
     private void onGameSceneLoaded(System.Object args)
     {
-        if(player == null)
-            player = GameObject.FindGameObjectWithTag("Player");
+        updateCameraPosition();
+    }
 
-        transform.position = player.transform.position + startingOffset;
-        transform.LookAt(player.transform.position);
+    private void updateCameraPosition()
+    {
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            if(player != null)
+            {
+                transform.position = player.transform.position + startingOffset;
+                transform.LookAt(player.transform.position);
+            }
+        }
+        else
+        {
+            Vector3 targetPosition = new Vector3(player.transform.position.x + startingOffset.x, transform.position.y, player.transform.position.z + startingOffset.z);
+            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
+            transform.LookAt(player.transform.position);
+        }
     }
 }

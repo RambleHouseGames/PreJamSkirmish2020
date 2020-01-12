@@ -55,7 +55,6 @@ public class SceneState
 
     public virtual SceneState GetNextState()
     {
-        Debug.Log("SceneState.GetNextState no implemented");
         return this;
     }
 
