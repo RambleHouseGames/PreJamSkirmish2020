@@ -20,7 +20,7 @@ public class Minion : MonoBehaviour
 
     private NavMeshAgent navMeshAgent;
 
-    private List<Civilian> pickupList = new List<Civilian>();
+    private List<Pirate> pickupList = new List<Pirate>();
 
     void Awake()
     {
@@ -29,8 +29,8 @@ public class Minion : MonoBehaviour
 
     void Start()
     {
-        SignalManager.Inst.AddListenner(Signal.CIVILIAN_DONKED, onCivilianDonked);
-        SignalManager.Inst.AddListenner(Signal.CIVILIAN_TURNED_IN, onCivilianTurnedIn);
+        SignalManager.Inst.AddListenner(Signal.PIRATE_DONKED, onPirateDonked);
+        SignalManager.Inst.AddListenner(Signal.PIRATE_TURNED_IN, onPirateTurnedIn);
     }
 
     void Update()
@@ -58,29 +58,29 @@ public class Minion : MonoBehaviour
         }
     }
 
-    private void onCivilianTurnedIn(System.Object args)
+    private void onPirateTurnedIn(System.Object args)
     {
-        Civilian turnedInCivilian = ((CivilianTurnedInArgs)args).TurnedInCivilian;
-        if (currentState == MinionState.DROPOFF && turnedInCivilian == pickupList[0])
+        Pirate turnedPirate = ((PirateTurnedInArgs)args).TurnedInPirate;
+        if (currentState == MinionState.DROPOFF && turnedPirate == pickupList[0])
         {
-            pickupList.Remove(turnedInCivilian);
+            pickupList.Remove(turnedPirate);
             if (pickupList.Count == 0)
                 currentState = MinionState.FOLLOW;
             else
                 currentState = MinionState.PICKUP;
         }
-        else if(pickupList.Contains(turnedInCivilian))
+        else if(pickupList.Contains(turnedPirate))
         {
-            pickupList.Remove(turnedInCivilian);
+            pickupList.Remove(turnedPirate);
         }
         
     }
 
-    private void onCivilianDonked(System.Object args)
+    private void onPirateDonked(System.Object args)
     {
-        CivilianDonkedArgs civilianDonkedArgs = (CivilianDonkedArgs)args;
-        if(!pickupList.Contains(civilianDonkedArgs.DonkedCivilian)) 
-            pickupList.Add(civilianDonkedArgs.DonkedCivilian);
+        PirateDonkedArgs pirateDonkedArgs = (PirateDonkedArgs)args;
+        if(!pickupList.Contains(pirateDonkedArgs.DonkedPirate)) 
+            pickupList.Add(pirateDonkedArgs.DonkedPirate);
         if(currentState == MinionState.FOLLOW)
         {
             currentState = MinionState.PICKUP;

@@ -20,8 +20,8 @@ public class HUD : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(activeBountyTextRect, "Active Bounty: " + GameDataManager.Inst.activeBounty.ToString());
-        GUI.Label(coinTextRect, "Coins: " + GameDataManager.Inst.coins);
-        GUI.Label(bountyTimerTextRect, "Remaining Time: " + GameDataManager.Inst.bountyTimer);
+        //GUI.Label(activeBountyTextRect, "Active Bounty: " + GameDataManager.Inst.activeBounty.ToString());
+        //GUI.Label(coinTextRect, "Coins: " + GameDataManager.Inst.coins);
+        //GUI.Label(bountyTimerTextRect, "Remaining Time: " + GameDataManager.Inst.bountyTimer);
     }
 }

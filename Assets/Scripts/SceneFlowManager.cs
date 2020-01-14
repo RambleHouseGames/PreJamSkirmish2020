@@ -9,6 +9,8 @@ public class SceneFlowManager : MonoBehaviour
 
     public SceneState currentState = new StartState();
 
+    public int BountiesCollected = 0;
+
     private void Awake()
     {
         if (SceneFlowManager.Inst == null)
@@ -123,6 +125,8 @@ public class MenuState : SceneState
 
 public class GameState : SceneState
 {
+    private bool gameOver = false;
+
     protected override void onStart()
     {
         SceneManager.sceneLoaded += onSceneLoaded;
@@ -133,12 +137,28 @@ public class GameState : SceneState
     {
         if(scene.name == "GameScene")
         {
+            SignalManager.Inst.AddListenner(Signal.GAME_OVER, onGameOver);
             SignalManager.Inst.FireSignal(Signal.GAME_SCENE_LOADED, null);
         }
     }
 
+    private void onGameOver(System.Object args)
+    {
+        GameOverArgs gameOverArgs = (GameOverArgs)args;
+        SceneFlowManager.Inst.BountiesCollected = gameOverArgs.BountiesCollected;
+        gameOver = true;
+    }
+
     public override SceneState GetNextState()
     {
-        return this;
+        if (gameOver)
+            return new StartState();
+        else
+            return this;
+    }
+
+    public override void Finish()
+    {
+        SceneManager.UnloadSceneAsync("GameScene");
     }
 }

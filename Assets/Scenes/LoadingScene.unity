@@ -263,7 +263,7 @@ MonoBehaviour:
   startingOffset: {x: 20, y: 15, z: 0}
   scrollMarginPer: 0.05
   ScrollMaxSpeed: 20
-  CameraComponent: {fileID: 0}
+  smoothTime: 0.3
 --- !u!1 &1389754856
 GameObject:
   m_ObjectHideFlags: 0

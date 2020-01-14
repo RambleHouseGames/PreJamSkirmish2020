@@ -43,7 +43,7 @@ public class SignalManager : MonoBehaviour
     }
 }
 
-public enum Signal { STARTED_LOADING, GAME_SCENE_LOADED, MENU_SCENE_LOADED, CIVILIAN_DONKED , CIVILIAN_TURNED_IN, START_BUTTON_PRESSED}
+public enum Signal { STARTED_LOADING, GAME_SCENE_LOADED, MENU_SCENE_LOADED, CIVILIAN_DONKED, PIRATE_DONKED, CIVILIAN_TURNED_IN, PIRATE_TURNED_IN, START_BUTTON_PRESSED, GAME_OVER}
 
 public class CivilianDonkedArgs
 {
@@ -62,5 +62,35 @@ public class CivilianTurnedInArgs
     public CivilianTurnedInArgs(Civilian turnedInCivilian)
     {
         TurnedInCivilian = turnedInCivilian;
+    }
+}
+
+public class PirateDonkedArgs
+{
+    public Pirate DonkedPirate;
+
+    public PirateDonkedArgs(Pirate donkedPirate)
+    {
+        DonkedPirate = donkedPirate;
+    }
+}
+
+public class PirateTurnedInArgs
+{
+    public Pirate TurnedInPirate;
+
+    public PirateTurnedInArgs(Pirate turnedInPirate)
+    {
+        TurnedInPirate = turnedInPirate;
+    }
+}
+
+public class GameOverArgs
+{
+    public int BountiesCollected;
+
+    public GameOverArgs(int bountiesCollected)
+    {
+        BountiesCollected = bountiesCollected;
     }
 }

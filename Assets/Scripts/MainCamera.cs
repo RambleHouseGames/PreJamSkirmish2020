@@ -67,7 +67,7 @@ public class MainCamera : MonoBehaviour
         {
             Vector3 targetPosition = new Vector3(player.transform.position.x + startingOffset.x, transform.position.y, player.transform.position.z + startingOffset.z);
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
-            transform.LookAt(player.transform.position);
+            //transform.LookAt(player.transform.position);
         }
     }
 }

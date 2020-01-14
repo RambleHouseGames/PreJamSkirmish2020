@@ -69,9 +69,9 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Civilian")
+        if (other.tag == "Pirate")
         {
-            other.gameObject.GetComponent<Civilian>().Donk();
+            other.gameObject.GetComponent<Pirate>().Donk();
             currentState = ProjectileState.RETURNING;
         }
     }
